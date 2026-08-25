@@ -10,7 +10,8 @@ const account = accounts.find(item => item.email === sessionEmail) || JSON.parse
 if (!account) window.location.href = 'login.html';
 connectedAccount.textContent = account ? `${account.email} account connected` : '';
 const profileActions = document.querySelector('.profile-actions');
-const disconnectBtn = document.createElement('button');
+const disconnectBtn = document.querySelector('#disconnectBtn') || document.createElement('button');
+if (!disconnectBtn.id) profileActions.prepend(disconnectBtn);
 disconnectBtn.className = 'button button-danger';
 disconnectBtn.type = 'button';
 disconnectBtn.id = 'disconnectBtn';
