@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#111315" />
+    <title>Your profile | Quest Score</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="profile-body">
+    <main class="profile-shell">
+      <a class="brand" href="index.html" aria-label="Quest Score home"><span class="brand-mark">+</span><span>quest<span class="brand-accent">score</span></span></a>
+      <section class="profile-panel" aria-labelledby="profileHeading"><div class="profile-panel-heading"><p class="eyebrow">YOUR PLAYER CARD</p><h1 id="profileHeading">Make it yours.</h1><p>Choose your gamertag and image, then keep your personal details up to date.</p><span class="connected-account" id="connectedAccount"></span></div><form id="profileForm"><div class="player-identity"><label class="profile-image-picker"><img id="profileImagePreview" alt="Profile preview" hidden /><span id="profileImageFallback">JD</span><input id="profileImage" name="profileImage" type="file" accept="image/png,image/jpeg,image/webp" /><span class="image-picker-label">Change image</span></label><label class="gamertag-field">Gamertag<input name="gamertag" autocomplete="nickname" placeholder="e.g. QuestJamie" maxlength="20" required /><small>Shown on your leaderboard profile</small></label></div><div class="profile-fields"><label>First name<input name="firstName" autocomplete="given-name" required /></label><label>Last name<input name="lastName" autocomplete="family-name" required /></label><label>Birth date<input name="birthDate" type="date" autocomplete="bday" required /></label><fieldset><legend>Location</legend><div class="location-fields"><label>Country<input name="country" autocomplete="country-name" required /></label><label>Town<input name="town" autocomplete="address-level2" required /></label><label>Zip code<input name="zipCode" autocomplete="postal-code" required /></label></div></fieldset></div><p class="profile-status" id="profileStatus" role="status" aria-live="polite"></p><div class="profile-actions"><a class="text-link" href="index.html">Back to quests</a><button class="button button-primary" type="submit">Save profile <span>→</span></button></div></form></section>
+    </main>
+    <script src="profile.js"></script>
+  </body>
+</html>

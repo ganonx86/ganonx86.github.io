@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#111315" />
+    <title>Sign in | Quest Score</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="login-body">
+    <main class="login-shell">
+      <section class="login-intro"><a class="brand" href="index.html" aria-label="Quest Score home"><span class="brand-mark">+</span><span>quest<span class="brand-accent">score</span></span></a><div class="login-message"><p class="eyebrow">YOUR QUESTS, EVERYWHERE</p><h1>Keep your momentum in reach.</h1><p>Sign in to carry your quests, achievements, and Gamerscore with you.</p><div class="login-streak"><span>✦</span><div><strong>1,210 GS</strong><small>ready for your next session</small></div></div></div></section>
+      <section class="login-panel" aria-labelledby="loginHeading"><div class="login-panel-inner"><p class="eyebrow">WELCOME BACK</p><h2 id="loginHeading">Sign in to Quest Score</h2><p class="login-subtitle">Use your email address and password.</p><form class="account-login" id="accountLogin"><label for="email">Email address<input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required /></label><label for="password">Password<input id="password" name="password" type="password" autocomplete="current-password" placeholder="At least 8 characters" minlength="8" required /></label><button class="button button-primary login-submit" type="submit">Sign in <span>→</span></button></form><div class="activation-box" id="activationBox" hidden><strong>Activate your account</strong><p>For this first login, use the activation link below.</p><a href="#activate" id="activationLink">Activate account</a></div><p class="login-status" id="loginStatus" role="status" aria-live="polite"></p><small class="login-legal">Your password stays in this browser for this dependency-free demo. A production app should use a secure server.</small></div></section>
+    </main>
+    <script src="login.js"></script>
+  </body>
+</html>
