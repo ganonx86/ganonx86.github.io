@@ -11,6 +11,7 @@ Open `index.html` in a browser. Use the sidebar to move between the Today, Leade
 - Add quests from the button or quick-add field
 - Add, edit, and remove subtasks as individual steps in the quest dialog
 - Schedule quests for future days and add optional deadlines
+- Toggle global dark mode from the Today page; the preference applies to every page
 - Complete quests and individual substeps
 - Gamerscore and daily progress update immediately
 - Achievement and streak dashboard visuals
@@ -19,6 +20,6 @@ Open `index.html` in a browser. Use the sidebar to move between the Today, Leade
 
 - `index.html` - Today quests and task management
 - `leaderboard.html` - Weekly rankings and personal statistics
-- `achievements.html` - Achievement collection and progress
-- `login.html` - Email and password login with first-login activation
+- `achievements.html` - Achievement collection and progress, including custom French achievements
+- `login.html` - Separate email/password sign-in and sign-up modes
 - `profile.html` - Personal information setup after activating an account

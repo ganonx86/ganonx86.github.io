@@ -9,6 +9,15 @@ const tasks = [
 const today = new Date();
 const localDate = new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
 let selectedDate = localDate;
+const activeAccounts = JSON.parse(localStorage.getItem('questscore-accounts') || '[]');
+const activeEmail = localStorage.getItem('questscore-session');
+const activeAccount = activeAccounts.find(account => account.email === activeEmail);
+const achievementStorageKey = `questscore-achievements-${activeEmail || 'guest'}`;
+let virginAccount = activeAccount?.isNew === true && activeAccount.gamerscore === 0;
+if (virginAccount) tasks.forEach(task => {
+  task.done = false;
+  task.subtasks.forEach(step => { step.done = false; });
+});
 const list = document.querySelector('#taskList');
 const progressText = document.querySelector('#progressText');
 const dayProgress = document.querySelector('#dayProgress');
@@ -22,6 +31,18 @@ let audioContext;
 let draftSubtasks = [];
 function calculatePoints(subtaskCount) {
   return Math.min(15, 5 + subtaskCount * 2);
+}
+function recordCompletedAchievements(task) {
+  if (!activeEmail || !task.done) return;
+  const names = new Set(JSON.parse(localStorage.getItem(achievementStorageKey) || '[]'));
+  names.add('Bienvenue, Aventurier');
+  const completedCount = Number(localStorage.getItem(`questscore-completed-count-${activeEmail}`) || 0) + 1;
+  localStorage.setItem(`questscore-completed-count-${activeEmail}`, completedCount);
+  if (completedCount >= 5) names.add("Et c'est parti !");
+  if (completedCount >= 10) names.add('La machine est lancée');
+  if (completedCount >= 25) names.add('Ça devient sérieux');
+  if (completedCount >= 100) names.add('Héros du quotidien');
+  localStorage.setItem(achievementStorageKey, JSON.stringify([...names]));
 }
 function playCompletionSound() {
   audioContext ||= new (window.AudioContext || window.webkitAudioContext)();
@@ -62,18 +83,30 @@ function renderTasks() {
   progressText.textContent = `${completed} of ${visibleTasks.length} completed`;
   dayProgress.style.width = visibleTasks.length ? `${(completed / visibleTasks.length) * 100}%` : '0%';
   const earnedToday = visibleTasks.filter(task => task.done).reduce((sum, task) => sum + task.points, 0);
-  todayPoints.textContent = earnedToday;
-  gamerscore.textContent = (1200 + earnedToday).toLocaleString();
+  const startingScore = activeAccount ? activeAccount.gamerscore : 1200;
+  const currentScore = virginAccount ? 0 : startingScore + earnedToday;
+  todayPoints.textContent = virginAccount ? '0' : earnedToday;
+  gamerscore.textContent = currentScore.toLocaleString();
 }
 list.addEventListener('change', event => {
   const input = event.target;
   const task = tasks.find(item => item.id === Number(input.dataset.task));
   if (!task) return;
+  const wasDone = task.done;
   const isSubtask = input.dataset.step !== undefined;
   if (isSubtask) {
     task.subtasks[Number(input.dataset.step)].done = input.checked;
     if (task.subtasks.every(step => step.done)) task.done = true;
   } else task.done = input.checked;
+  if (input.checked) {
+    if (virginAccount && task.done) {
+      virginAccount = false;
+      activeAccount.isNew = false;
+      localStorage.setItem('questscore-accounts', JSON.stringify(activeAccounts));
+      localStorage.setItem('questscore-account', JSON.stringify(activeAccount));
+    }
+    if (task.done && !wasDone) recordCompletedAchievements(task);
+  }
   renderTasks();
   if (input.checked) {
     const questCompleted = task.done && isSubtask;

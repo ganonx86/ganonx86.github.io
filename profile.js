@@ -4,10 +4,19 @@ const connectedAccount = document.querySelector('#connectedAccount');
 const profileImage = document.querySelector('#profileImage');
 const profileImagePreview = document.querySelector('#profileImagePreview');
 const profileImageFallback = document.querySelector('#profileImageFallback');
-const account = JSON.parse(localStorage.getItem('questscore-account') || 'null');
-if (!account || !account.activated) window.location.href = 'login.html';
+const accounts = JSON.parse(localStorage.getItem('questscore-accounts') || '[]');
+const sessionEmail = localStorage.getItem('questscore-session');
+const account = accounts.find(item => item.email === sessionEmail) || JSON.parse(localStorage.getItem('questscore-account') || 'null');
+if (!account) window.location.href = 'login.html';
 connectedAccount.textContent = account ? `${account.email} account connected` : '';
-const savedProfile = JSON.parse(localStorage.getItem('questscore-profile') || 'null');
+const profileActions = document.querySelector('.profile-actions');
+const disconnectBtn = document.createElement('button');
+disconnectBtn.className = 'button button-danger';
+disconnectBtn.type = 'button';
+disconnectBtn.id = 'disconnectBtn';
+disconnectBtn.textContent = 'Disconnect profile';
+profileActions.prepend(disconnectBtn);
+const savedProfile = account?.profile || JSON.parse(localStorage.getItem('questscore-profile') || 'null');
 if (savedProfile) Object.entries(savedProfile).forEach(([name, value]) => {
   if (name !== 'profileImage' && profileForm.elements[name]) profileForm.elements[name].value = value;
 });
@@ -29,7 +38,15 @@ profileForm.addEventListener('submit', event => {
   event.preventDefault();
   const profile = Object.fromEntries(new FormData(profileForm));
   profile.profileImage = profileImagePreview.hidden ? savedProfile?.profileImage || '' : profileImagePreview.src;
+  account.profile = profile;
+  localStorage.setItem('questscore-accounts', JSON.stringify(accounts.map(item => item.email === account.email ? account : item)));
+  localStorage.setItem('questscore-account', JSON.stringify(account));
   localStorage.setItem('questscore-profile', JSON.stringify(profile));
   profileStatus.textContent = 'Profile saved. Your quests are ready.';
   setTimeout(() => { window.location.href = 'index.html'; }, 700);
+});
+disconnectBtn.addEventListener('click', () => {
+  localStorage.removeItem('questscore-session');
+  localStorage.removeItem('questscore-account');
+  window.location.href = 'login.html';
 });

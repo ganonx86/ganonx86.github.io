@@ -25,7 +25,7 @@
         </div>
       </aside>
       <main class="main-content" id="top">
-        <header class="topbar"><div class="breadcrumb">Workspace <span>/</span> Today</div><div class="top-actions"><label class="date-picker" aria-label="Choose day"><span>VIEWING</span><input type="date" id="dateChip" /></label><a class="avatar avatar-small" href="profile.html" aria-label="Jamie Doe profile">JD</a></div></header>
+        <header class="topbar"><div class="breadcrumb">Workspace <span>/</span> Today</div><div class="top-actions"><label class="date-picker" aria-label="Choose day"><span>VIEWING</span><input type="date" id="dateChip" /></label><button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false">☾ <span>Dark mode</span></button><a class="avatar avatar-small" href="profile.html" aria-label="Jamie Doe profile">JD</a></div></header>
         <div class="content-grid" id="today-layout">
           <section class="primary-column" id="today">
             <div class="page-heading"><div><p class="eyebrow">TUESDAY, AUGUST 25</p><h1>Good morning, Jamie <span class="wave">✦</span></h1><p class="heading-copy">A clear mind starts with a clear list.</p></div><button class="button button-primary" id="addTaskBtn"><span>＋</span> New task</button></div>
@@ -35,7 +35,7 @@
             <div class="quick-add" id="quickAdd"><span class="plus-circle">＋</span><input id="taskInput" placeholder="Add a new quest..." aria-label="New quest title" /><button id="quickAddBtn">Add quest</button></div>
           </section>
           <aside class="right-column">
-            <section class="level-card"><div class="level-card-top"><div><p class="eyebrow light">TOTAL GAMERSCORE</p><div class="level-number" id="gamerscore">1,210</div><strong>Achievement hunter</strong></div><div class="trophy">♜</div></div><div class="level-xp"><span>1,210 GS</span><span>2,000 GS</span></div><div class="progress-track dark-track"><div class="progress-fill gold-fill" style="width:60.5%"></div></div><p class="level-foot">790 GS until the next milestone</p></section>
+            <section class="level-card"><div class="level-card-top"><div><p class="eyebrow light">TOTAL GAMERSCORE</p><div class="level-number" id="gamerscore">1,210</div><strong>Achievement hunter</strong></div><div class="trophy">♜</div></div></section>
             <section class="achievements-panel"><div class="section-heading"><h2>Achievements</h2><a href="#achievements">View all</a></div><div class="achievement-list"><article class="achievement unlocked"><div class="achievement-icon">⚡</div><div><strong>First strike</strong><p>Complete your first quest</p><span>Unlocked today</span></div><b>+50</b></article><article class="achievement"><div class="achievement-icon outline">◒</div><div><strong>On a roll</strong><p>Complete 5 quests in a row</p><div class="achievement-progress"><span style="width:60%"></span></div><small>3 / 5 completed</small></div><b>+100</b></article><article class="achievement"><div class="achievement-icon outline">☼</div><div><strong>Early bird</strong><p>Finish a quest before 9 AM</p><small>Not started</small></div><b>+75</b></article></div></section>
             <section class="streak-card"><div class="streak-heading"><span class="fire">✹</span><div><strong>3 day streak</strong><span>Keep the momentum going</span></div></div><div class="week"><span class="done">M</span><span class="done">T</span><span class="done">W</span><span class="today-dot">T</span><span>F</span><span>S</span><span>S</span></div></section>
           </aside>
@@ -57,5 +57,8 @@
     <div class="modal-backdrop" id="modal" hidden><form class="modal" id="taskForm"><button type="button" class="modal-close" id="modalClose" aria-label="Close">×</button><p class="eyebrow" id="modalEyebrow">NEW QUEST</p><h2 id="modalHeading">What will you score next?</h2><label>Quest title<input name="title" required placeholder="e.g. Ship the new landing page" /></label><div class="schedule-fields"><label>Scheduled for<input name="scheduledDate" type="date" required /></label><label>Deadline<input name="deadline" type="date" /></label></div><div class="subtask-editor"><div class="subtask-editor-heading"><span>Subtasks</span><button type="button" class="add-subtask" id="addSubtaskBtn">＋ Add subtask</button></div><div class="subtask-draft-list" id="subtaskDraftList"></div></div><p class="score-rule">Gamerscore is based on your steps: 5 GS base + 2 GS per subtask, capped at 15 GS.</p><div class="modal-actions"><button class="button button-danger" id="deleteTaskBtn" type="button" hidden>Remove quest</button><button class="button button-primary" id="saveTaskBtn" type="submit">Add quest <span>→</span></button></div></form></div>
     <div class="toast" id="toast" role="status" aria-live="polite"><span class="toast-icon">✓</span><span><strong id="toastTitle">Quest complete</strong><small id="toastMessage">+40 GS added to your score</small></span></div>
     <script src="app.js"></script>
+    <script src="achievements.js"></script>
+    <script src="user-profile.js"></script>
+    <script src="theme.js"></script>
   </body>
 </html>
