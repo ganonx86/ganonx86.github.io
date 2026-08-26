@@ -15,9 +15,12 @@ googleLogin.addEventListener('click', async () => {
     if (existingIndex >= 0) accounts[existingIndex] = { ...accounts[existingIndex], ...account, profile: accounts[existingIndex].profile || account.profile };
     else accounts.push(account);
     localStorage.setItem('questscore-accounts', JSON.stringify(accounts));
-    localStorage.setItem('questscore-account', JSON.stringify(account));
+    const savedProfile = accounts[existingIndex]?.profile;
+    localStorage.setItem('questscore-account', JSON.stringify({ ...account, profile: savedProfile || account.profile }));
     localStorage.setItem('questscore-session', user.email);
-    window.location.href = 'profile.html';
+    const profile = savedProfile || account.profile;
+    const hasCompleteProfile = profile?.gamertag && profile?.firstName && profile?.lastName && profile?.birthDate && profile?.country && profile?.town && profile?.zipCode;
+    window.location.href = hasCompleteProfile ? 'dashboard.html' : 'profile-creation.html';
   } catch (error) {
     loginStatus.textContent = error.code === 'auth/popup-closed-by-user' ? 'Google sign-in was cancelled.' : 'Google sign-in failed. Please try again.';
     googleLogin.disabled = false;

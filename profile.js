@@ -47,7 +47,7 @@ profileForm.addEventListener('submit', event => {
   profileStatus.textContent = 'Profile saved. Your quests are ready.';
   setTimeout(() => { window.location.href = 'index.html'; }, 700);
 });
-disconnectBtn.addEventListener('click', () => {
+disconnectBtn?.addEventListener('click', () => {
   localStorage.removeItem('questscore-session');
   localStorage.removeItem('questscore-account');
   window.location.href = 'login.html';
