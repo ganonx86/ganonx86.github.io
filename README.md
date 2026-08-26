@@ -4,7 +4,7 @@ A dependency-free todo dashboard with nested subtasks, Gamerscore rewards, strea
 
 ## Run
 
-Open `index.html` in a browser. Use the sidebar to move between the Today, Leaderboard, and Achievements pages. No install or build step is required.
+Open `index.html` in a browser to sign in. After authentication, use the dashboard sidebar to move between the Today, Leaderboard, and Achievements pages. No install or build step is required.
 
 ## Included
 
@@ -18,7 +18,8 @@ Open `index.html` in a browser. Use the sidebar to move between the Today, Leade
 
 ## Pages
 
-- `index.html` - Today quests and task management
+- `index.html` - Login entry point
+- `dashboard.html` - Today quests and task management
 - `leaderboard.html` - Weekly rankings and personal statistics
 - `achievements.html` - Achievement collection and progress, including custom French achievements
 - `login.html` - Separate email/password sign-in and sign-up modes

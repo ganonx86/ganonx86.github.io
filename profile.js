@@ -44,7 +44,7 @@ profileForm.addEventListener('submit', event => {
   localStorage.setItem('questscore-account', JSON.stringify(account));
   localStorage.setItem('questscore-profile', JSON.stringify(profile));
   profileStatus.textContent = 'Profile saved. Your quests are ready.';
-  setTimeout(() => { window.location.href = 'index.html'; }, 700);
+  setTimeout(() => { window.location.href = 'dashboard.html'; }, 700);
 });
 disconnectBtn.addEventListener('click', () => {
   localStorage.removeItem('questscore-session');
