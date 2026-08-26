@@ -27,6 +27,6 @@ document.querySelectorAll('.avatar, .rank-avatar').forEach(element => {
     } else element.textContent = initials;
   }
 });
-document.querySelectorAll('[aria-label*="Player"]').forEach(element => { element.setAttribute('aria-label', `${displayName} profile`); });
+document.querySelectorAll('[aria-label$="profile"]').forEach(element => { element.setAttribute('aria-label', `${displayName} profile`); });
 const todayHeading = document.querySelector('#today h1');
 if (todayHeading) todayHeading.firstChild.nodeValue = `Good morning, ${displayName} `;
