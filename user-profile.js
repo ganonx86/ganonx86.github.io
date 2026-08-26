@@ -5,8 +5,17 @@ const profile = account?.profile || JSON.parse(localStorage.getItem('questscore-
 const fullName = [profile?.firstName, profile?.lastName].filter(Boolean).join(' ');
 const displayName = profile?.gamertag || fullName || account?.email?.split('@')[0] || 'Player';
 const initials = (profile?.firstName?.[0] || displayName[0] || 'P').concat(profile?.lastName?.[0] || '').toUpperCase();
+const accountScore = Number(account?.gamerscore || 0);
+const today = new Date();
+const currentDate = new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+const accountTasks = JSON.parse(localStorage.getItem(`questscore-tasks-${sessionEmail || 'guest'}`) || '[]');
+const activeTodayCount = accountTasks.filter(task => (task.scheduledDate || currentDate) === currentDate && !task.done).length;
 document.querySelectorAll('.mini-profile strong').forEach(element => { element.textContent = displayName; });
 document.querySelectorAll('.mini-profile span').forEach(element => { element.textContent = fullName || 'Score chaser'; });
+document.querySelectorAll('.xp-mini-top span:first-child').forEach(element => { element.textContent = 'Score'; });
+document.querySelectorAll('.xp-mini-top span:last-child').forEach(element => { element.textContent = `${accountScore.toLocaleString()} GS`; });
+document.querySelectorAll('.xp-mini .progress-fill').forEach(element => { element.style.width = `${Math.min(100, Math.round((accountScore / 1500) * 100))}%`; });
+document.querySelectorAll('.nav-count').forEach(element => { element.textContent = activeTodayCount; });
 document.querySelectorAll('.rank-you .rank-person strong').forEach(element => { element.innerHTML = `${displayName} <em>You</em>`; });
 document.querySelectorAll('.avatar, .rank-avatar').forEach(element => {
   if (element.classList.contains('avatar-you') || element.classList.contains('avatar') || element.classList.contains('rank-avatar')) {

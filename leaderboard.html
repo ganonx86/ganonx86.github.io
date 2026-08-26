@@ -9,13 +9,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
+    <script src="auth-guard.js"></script>
   </head>
   <body>
     <div class="app-shell">
       <aside class="sidebar">
         <a class="brand" href="index.html" aria-label="Quest Score home"><span class="brand-mark">+</span><span>quest<span class="brand-accent">score</span></span></a>
         <nav class="nav" aria-label="Main navigation">
-          <a class="nav-item" href="index.html"><span class="nav-icon">◉</span> Today <span class="nav-count">4</span></a>
+          <a class="nav-item" href="index.html"><span class="nav-icon">◉</span> Today <span class="nav-count">0</span></a>
           <a class="nav-item active" href="leaderboard.html"><span class="nav-icon">▥</span> Leaderboard</a>
           <a class="nav-item" href="achievements.html"><span class="nav-icon">◇</span> Achievements</a>
         </nav>
@@ -26,14 +27,14 @@
         <section class="leaderboard-page">
           <div class="leaderboard-heading"><div><p class="eyebrow">COMMUNITY SCOREBOARD</p><h1>Leaderboard <span class="wave">✦</span></h1><p class="heading-copy">A little friendly pressure for the quests that matter.</p></div><div class="leaderboard-period"><span>THIS WEEK</span><strong>Aug 19 - 25</strong></div></div>
           <div class="leaderboard-grid">
-            <section class="ranking-panel"><div class="section-heading"><h2>Top questers</h2><span class="ranking-note">Updated just now</span></div><div class="ranking-list"><article class="rank-row rank-you"><span class="rank-number">1</span><div class="rank-avatar avatar-you">JD</div><div class="rank-person"><strong>Jamie Doe <em>You</em></strong><span>8 quests completed</span></div><b>1,210 <small>GS</small></b></article><article class="rank-row"><span class="rank-number">2</span><div class="rank-avatar avatar-blue">AK</div><div class="rank-person"><strong>Alex Kim</strong><span>11 quests completed</span></div><b>1,185 <small>GS</small></b></article><article class="rank-row"><span class="rank-number">3</span><div class="rank-avatar avatar-coral">MR</div><div class="rank-person"><strong>Morgan Reed</strong><span>9 quests completed</span></div><b>1,040 <small>GS</small></b></article><article class="rank-row"><span class="rank-number">4</span><div class="rank-avatar avatar-gold">SL</div><div class="rank-person"><strong>Sam Lee</strong><span>7 quests completed</span></div><b>920 <small>GS</small></b></article></div></section>
-            <section class="personal-stats"><div class="section-heading"><h2>Your stats</h2><span class="stat-period">ALL TIME</span></div><div class="personal-score"><span>Total Gamerscore</span><strong>1,210 <small>GS</small></strong><div class="personal-progress"><span style="width:68%"></span></div><small>68% toward your next milestone</small></div><div class="stat-metrics"><div><strong>24</strong><span>Quests done</span></div><div><strong>3</strong><span>Day streak</span></div><div><strong>82%</strong><span>Completion rate</span></div><div><strong>+140</strong><span>This week</span></div></div></section>
+            <section class="ranking-panel"><div class="section-heading"><h2>Top questers</h2><span class="ranking-note">Updated just now</span></div><div class="ranking-list"><article class="rank-row rank-you"><span class="rank-number">1</span><div class="rank-avatar avatar-you">JD</div><div class="rank-person"><strong>Jamie Doe <em>You</em></strong><span id="rankCompleted">0 quests completed</span></div><b><span id="rankScore">0</span> <small>GS</small></b></article></div></section>
+            <section class="personal-stats"><div class="section-heading"><h2>Your stats</h2><span class="stat-period">ALL TIME</span></div><div class="personal-score"><span>Total Gamerscore</span><strong><span id="totalScore">0</span> <small>GS</small></strong><div class="personal-progress"><span style="width:0%"></span></div><small id="scoreMilestone">0% toward your next milestone</small></div><div class="stat-metrics"><div><strong id="questsDone">0</strong><span>Quests done</span></div><div><strong>0</strong><span>Day streak</span></div><div><strong id="completionRate">0%</strong><span>Completion rate</span></div><div><strong id="weekCompleted">0</strong><span>This week</span></div></div></section>
           </div>
-          <section class="score-insight"><span class="insight-mark">✦</span><div><strong>You are 25 GS away from second place</strong><p>Complete two more quests this week to climb the board.</p></div><a class="button button-primary" href="index.html">View quests <span>→</span></a></section>
         </section>
       </main>
     </div>
     <script src="user-profile.js"></script>
+    <script src="leaderboard.js"></script>
     <script src="theme.js"></script>
   </body>
 </html>

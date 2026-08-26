@@ -60,11 +60,28 @@ const achievements = [
   { category: 'Habitudes & apprentissage', name: 'Je peux le faire', condition: 'Réussir quelque chose qui semblait impossible', reward: 150 }
 ];
 const achievementAccountEmail = localStorage.getItem('questscore-session') || 'guest';
-const completedAchievementNames = new Set(JSON.parse(localStorage.getItem(`questscore-achievements-${achievementAccountEmail}`) || '[]'));
+const achievementAccounts = JSON.parse(localStorage.getItem('questscore-accounts') || '[]');
+const achievementAccount = achievementAccounts.find(account => account.email === achievementAccountEmail);
+const achievementLegacyStorageKey = `questscore-achievements-${achievementAccountEmail}`;
+const completedAchievementNames = new Set([...(achievementAccount?.achievements || []), ...JSON.parse(localStorage.getItem(achievementLegacyStorageKey) || '[]')]);
+if (achievementAccount) {
+  achievementAccount.achievements = [...completedAchievementNames];
+  localStorage.setItem('questscore-accounts', JSON.stringify(achievementAccounts));
+  localStorage.setItem('questscore-account', JSON.stringify(achievementAccount));
+}
+const completedQuestCount = Number(localStorage.getItem(`questscore-completed-count-${achievementAccountEmail}`) || 0);
+achievements.find(achievement => achievement.name === "Et c'est parti !").progress = `${Math.min(completedQuestCount, 5)} / 5 quêtes`;
 document.querySelectorAll('.xp-mini-top span:first-child').forEach(element => { element.textContent = 'Score'; });
 document.querySelectorAll('.level-card .eyebrow.light').forEach(element => { element.textContent = 'TOTAL SCORE'; });
+const achievementAccountScore = Number(JSON.parse(localStorage.getItem('questscore-account') || 'null')?.gamerscore || 0);
+document.querySelectorAll('.level-card .level-number').forEach(element => { element.textContent = achievementAccountScore.toLocaleString(); });
+document.querySelectorAll('.xp-mini-top span:first-child').forEach(element => { element.textContent = 'Score'; });
+document.querySelectorAll('.xp-mini-top span:last-child').forEach(element => { element.textContent = `${achievementAccountScore.toLocaleString()} GS`; });
 const achievementTotal = document.querySelector('.achievement-total strong');
 if (achievementTotal) achievementTotal.textContent = `${completedAchievementNames.size} / ${achievements.filter(achievement => !achievement.secret).length}`;
+document.querySelectorAll('.achievement-page-panel .ranking-note').forEach(element => {
+  element.textContent = `${completedAchievementNames.size} unlocked`;
+});
 function renderAchievements(container, limit = achievements.length, onlyUnlocked = false) {
   let currentCategory = '';
   const visibleAchievements = achievements.filter(achievement => !achievement.secret && (!onlyUnlocked || completedAchievementNames.has(achievement.name))).slice(0, limit);
@@ -73,13 +90,13 @@ function renderAchievements(container, limit = achievements.length, onlyUnlocked
     currentCategory = achievement.category;
     const isUnlocked = completedAchievementNames.has(achievement.name);
     const isHidden = achievement.secret && achievement.state !== 'unlocked';
-    const progress = isHidden ? '<small>Succès secret · À découvrir</small>' : achievement.progress ? `<small>${achievement.progress}</small>` : `<small>${achievement.status || 'À débloquer'}</small>`;
     return `${category}<article class="achievement ${isUnlocked ? 'unlocked' : ''} ${isHidden ? 'secret-achievement' : ''}"><div class="achievement-icon ${isUnlocked ? '' : 'outline'}">${isHidden ? '?' : index === 0 ? '⚡' : index % 3 === 0 ? '◆' : index % 3 === 1 ? '◒' : '☼'}</div><div><strong>${isHidden ? 'Succès secret' : achievement.name}</strong><p>${isHidden ? 'Continue à accomplir des quêtes pour le découvrir.' : achievement.condition}</p>${achievement.progress && !isHidden ? '<div class="achievement-progress"><span style="width:60%"></span></div>' : ''}${isHidden ? '<small>Succès secret · À découvrir</small>' : `<small>${isUnlocked ? 'Débloqué' : 'À débloquer'}</small>`}</div><b>${isHidden ? '???' : `+${achievement.reward}`}</b></article>`;
   }).join('');
 }
 document.querySelectorAll('.achievement-list').forEach(container => {
   const isCollection = Boolean(container.closest('.achievement-page-panel'));
-  renderAchievements(container, isCollection ? achievements.length : 3, isCollection);
+  if (isCollection) container.replaceChildren();
+  renderAchievements(container, isCollection ? achievements.length : 3, true);
   if (isCollection) {
     const viewAllButton = document.createElement('button');
     viewAllButton.className = 'achievement-view-all';

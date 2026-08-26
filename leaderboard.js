@@ -1,0 +1,25 @@
+const leaderboardEmail = localStorage.getItem('questscore-session');
+const leaderboardAccounts = JSON.parse(localStorage.getItem('questscore-accounts') || '[]');
+const leaderboardAccount = leaderboardAccounts.find(account => account.email === leaderboardEmail);
+const leaderboardTasks = JSON.parse(localStorage.getItem(`questscore-tasks-${leaderboardEmail || 'guest'}`) || '[]');
+const completedTasks = leaderboardTasks.filter(task => task.done);
+const totalQuests = leaderboardTasks.length;
+const completedCount = Number(localStorage.getItem(`questscore-completed-count-${leaderboardEmail}`) || completedTasks.length);
+const completionRate = totalQuests ? Math.round((completedTasks.length / totalQuests) * 100) : 0;
+const today = new Date();
+const weekStart = new Date(today);
+weekStart.setDate(today.getDate() - ((today.getDay() + 6) % 7));
+weekStart.setHours(0, 0, 0, 0);
+const weekCompleted = completedTasks.filter(task => task.scheduledDate && new Date(`${task.scheduledDate}T00:00:00`) >= weekStart).length;
+const score = Number(leaderboardAccount?.gamerscore || 0);
+
+document.querySelectorAll('.xp-mini-top span:first-child').forEach(element => { element.textContent = 'Score'; });
+document.querySelectorAll('.xp-mini-top span:last-child').forEach(element => { element.textContent = `${score.toLocaleString()} GS`; });
+document.querySelectorAll('.xp-mini .progress-fill').forEach(element => { element.style.width = `${Math.min(100, Math.round((score / 1500) * 100))}%`; });
+document.querySelector('#rankCompleted').textContent = `${completedCount} quests completed`;
+document.querySelector('#rankScore').textContent = score.toLocaleString();
+document.querySelector('#totalScore').textContent = score.toLocaleString();
+document.querySelector('#scoreMilestone').textContent = `${Math.min(100, Math.round((score / 1500) * 100))}% toward your next milestone`;
+document.querySelector('#questsDone').textContent = completedCount;
+document.querySelector('#completionRate').textContent = `${completionRate}%`;
+document.querySelector('#weekCompleted').textContent = weekCompleted;

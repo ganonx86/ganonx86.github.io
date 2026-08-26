@@ -44,7 +44,7 @@ accountLogin.addEventListener('submit', event => {
       loginStatus.textContent = 'An account with this email already exists. Sign in instead.';
       return;
     }
-    accounts.push({ email, password, profile: null, gamerscore: 0, isNew: true });
+    accounts.push({ email, password, profile: null, gamerscore: 0, achievements: [], isNew: true });
     localStorage.setItem('questscore-accounts', JSON.stringify(accounts));
     localStorage.setItem('questscore-account', JSON.stringify(accounts.at(-1)));
     localStorage.setItem('questscore-session', email);

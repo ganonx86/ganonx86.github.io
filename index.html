@@ -9,13 +9,14 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
+    <script src="auth-guard.js"></script>
   </head>
-  <body>
+  <body class="dashboard-body">
     <div class="app-shell">
       <aside class="sidebar">
         <a class="brand" href="#top" aria-label="Quest Score home"><span class="brand-mark">+</span><span>quest<span class="brand-accent">score</span></span></a>
         <nav class="nav" aria-label="Main navigation">
-          <a class="nav-item active" href="index.html"><span class="nav-icon">◉</span> Today <span class="nav-count">4</span></a>
+          <a class="nav-item active" href="index.html"><span class="nav-icon">◉</span> Today <span class="nav-count">0</span></a>
           <a class="nav-item" href="leaderboard.html"><span class="nav-icon">▥</span> Leaderboard</a>
           <a class="nav-item" href="achievements.html"><span class="nav-icon">◇</span> Achievements</a>
         </nav>
@@ -32,11 +33,10 @@
             <div class="stat-row"><div class="stat"><span class="stat-label">TODAY'S PROGRESS</span><strong id="progressText">2 of 6 completed</strong><div class="progress-track"><div class="progress-fill" id="dayProgress" style="width:33%"></div></div></div><div class="stat stat-points"><span class="stat-label">EARNED TODAY</span><strong><span class="spark">✦</span> <span id="todayPoints">10</span> GS</strong><span class="stat-note">+30 GS available</span></div></div>
             <div class="section-heading"><h2>Today's quests</h2><button class="filter-button" id="filterBtn">All quests <span>⌄</span></button></div>
             <div class="task-list" id="taskList"></div>
-            <div class="quick-add" id="quickAdd"><span class="plus-circle">＋</span><input id="taskInput" placeholder="Add a new quest..." aria-label="New quest title" /><button id="quickAddBtn">Add quest</button></div>
           </section>
           <aside class="right-column">
             <section class="level-card"><div class="level-card-top"><div><p class="eyebrow light">TOTAL GAMERSCORE</p><div class="level-number" id="gamerscore">0</div><strong>Quest beginner</strong></div><div class="trophy">♜</div></div></section>
-            <section class="achievements-panel"><div class="section-heading"><h2>Achievements</h2><a href="#achievements">View all</a></div><div class="achievement-list"><article class="achievement"><div class="achievement-icon outline">⚡</div><div><strong>First strike</strong><p>Complete your first quest</p><small>Not started</small></div><b>+50</b></article><article class="achievement"><div class="achievement-icon outline">◒</div><div><strong>On a roll</strong><p>Complete 5 quests in a row</p><div class="achievement-progress"><span style="width:0%"></span></div><small>0 / 5 completed</small></div><b>+100</b></article><article class="achievement"><div class="achievement-icon outline">☼</div><div><strong>Early bird</strong><p>Finish a quest before 9 AM</p><small>Not started</small></div><b>+75</b></article></div></section>
+            <section class="achievements-panel"><div class="section-heading"><h2>Achievements</h2><a href="#achievements">View all</a></div><div class="achievement-list"></div></section>
             <section class="streak-card"><div class="streak-heading"><span class="fire">✹</span><div><strong>3 day streak</strong><span>Keep the momentum going</span></div></div><div class="week"><span class="done">M</span><span class="done">T</span><span class="done">W</span><span class="today-dot">T</span><span>F</span><span>S</span><span>S</span></div></section>
           </aside>
         </div>
@@ -49,7 +49,7 @@
           <section class="score-insight"><span class="insight-mark">✦</span><div><strong>Ready to start your quest?</strong><p>Complete your first quest to begin your journey.</p></div><button class="button button-primary" data-view="today">View quests <span>→</span></button></section>
         </section>
         <section class="achievements-page" id="achievements" hidden>
-          <div class="achievements-heading"><div><p class="eyebrow">REWARDS & MILESTONES</p><h1>Achievements <span class="wave">✦</span></h1><p class="heading-copy">Every completed quest leaves a mark.</p></div><div class="achievement-total"><strong>1 / 12</strong><span>unlocked</span></div></div>
+          <div class="achievements-heading"><div><p class="eyebrow">REWARDS & MILESTONES</p><h1>Achievements <span class="wave">✦</span></h1><p class="heading-copy">Every completed quest leaves a mark.</p></div><div class="achievement-total"><strong>0 / 49</strong><span>unlocked</span></div></div>
           <div class="achievement-page-grid"><section class="achievements-panel achievement-page-panel"><div class="section-heading"><h2>Your collection</h2><span class="ranking-note">1 unlocked this week</span></div><div class="achievement-list"><article class="achievement unlocked"><div class="achievement-icon">⚡</div><div><strong>Bienvenue, Aventurier</strong><p>Terminer sa première quête</p><span>Unlocked today</span></div><b>+50</b></article></div></section></div><section class="streak-card"><div class="streak-heading"><span class="fire">✹</span><div><strong>3 day streak</strong><span>Keep the momentum going</span></div></div><div class="week"><span class="done">M</span><span class="done">T</span><span class="done">W</span><span class="today-dot">T</span><span>F</span><span>S</span><span>S</span></div></section>
         </section>
       </main>

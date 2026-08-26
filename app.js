@@ -1,13 +1,11 @@
-const tasks = [
-  { id: 5, title: 'Inbox zero', points: 40, label: 'Work', scheduledDate: '2026-08-26', deadline: '2026-08-27', subtasks: [], done: false },
-  { id: 6, title: 'Call Mum', points: 20, label: 'Personal', scheduledDate: '2026-08-26', deadline: '2026-08-26', subtasks: [], done: false }
-];
 const today = new Date();
 const localDate = new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
 let selectedDate = localDate;
 const activeAccounts = JSON.parse(localStorage.getItem('questscore-accounts') || '[]');
 const activeEmail = localStorage.getItem('questscore-session');
 const activeAccount = activeAccounts.find(account => account.email === activeEmail);
+const taskStorageKey = `questscore-tasks-${activeEmail || 'guest'}`;
+const tasks = JSON.parse(localStorage.getItem(taskStorageKey) || '[]');
 const achievementStorageKey = `questscore-achievements-${activeEmail || 'guest'}`;
 let virginAccount = activeAccount?.isNew === true && activeAccount.gamerscore === 0;
 if (virginAccount) tasks.forEach(task => {
@@ -25,12 +23,15 @@ const toastMessage = document.querySelector('#toastMessage');
 let toastTimer;
 let audioContext;
 let draftSubtasks = [];
+function saveTasks() {
+  localStorage.setItem(taskStorageKey, JSON.stringify(tasks));
+}
 function calculatePoints(subtaskCount) {
   return Math.min(15, 5 + subtaskCount * 2);
 }
 function recordCompletedAchievements(task) {
   if (!activeEmail || !task.done) return;
-  const names = new Set(JSON.parse(localStorage.getItem(achievementStorageKey) || '[]'));
+  const names = new Set([...(activeAccount?.achievements || []), ...JSON.parse(localStorage.getItem(achievementStorageKey) || '[]')]);
   names.add('Bienvenue, Aventurier');
   const completedCount = Number(localStorage.getItem(`questscore-completed-count-${activeEmail}`) || 0) + 1;
   localStorage.setItem(`questscore-completed-count-${activeEmail}`, completedCount);
@@ -38,6 +39,11 @@ function recordCompletedAchievements(task) {
   if (completedCount >= 10) names.add('La machine est lancée');
   if (completedCount >= 25) names.add('Ça devient sérieux');
   if (completedCount >= 100) names.add('Héros du quotidien');
+  if (activeAccount) {
+    activeAccount.achievements = [...names];
+    localStorage.setItem('questscore-accounts', JSON.stringify(activeAccounts));
+    localStorage.setItem('questscore-account', JSON.stringify(activeAccount));
+  }
   localStorage.setItem(achievementStorageKey, JSON.stringify([...names]));
 }
 function playCompletionSound() {
@@ -74,13 +80,13 @@ function showCompletionFeedback(title, points, isSubtask) {
 function renderTasks() {
   tasks.forEach(task => { task.points = calculatePoints(task.subtasks.length); });
   const visibleTasks = tasks.filter(task => (task.scheduledDate || localDate) === selectedDate);
+  document.querySelectorAll('.nav-count').forEach(element => { element.textContent = tasks.filter(task => (task.scheduledDate || localDate) === selectedDate && !task.done).length; });
   list.innerHTML = visibleTasks.length ? visibleTasks.map(task => `<article class="task ${task.done ? 'completed' : ''}"><div class="task-main"><input class="check" type="checkbox" ${task.done ? 'checked' : ''} ${task.subtasks.length && !task.subtasks.every(step => step.done) ? 'disabled' : ''} data-task="${task.id}" aria-label="Complete ${task.title}"><div class="task-copy"><span class="task-title">${task.title}</span><div class="task-meta"><span class="task-points">✦ ${task.points} GS</span><span>${task.label}</span>${task.deadline ? `<span class="deadline ${task.deadline < selectedDate ? 'overdue' : ''}">Due ${task.deadline}</span>` : ''}${task.subtasks.length ? `<span>${task.subtasks.filter(step => step.done).length}/${task.subtasks.length} steps</span>` : ''}</div></div><button class="task-menu" aria-label="More options for ${task.title}">•••</button></div>${task.subtasks.length ? `<div class="subtasks">${task.subtasks.map((step, index) => `<label class="subtask"><input type="checkbox" data-task="${task.id}" data-step="${index}" ${step.done ? 'checked' : ''}> <span>${step.text}</span></label>`).join('')}</div>` : ''}</article>`).join('') : '<p class="empty-day">No quests scheduled for this day. Create one and give it a deadline.</p>';
   const completed = visibleTasks.filter(task => task.done).length;
   progressText.textContent = `${completed} of ${visibleTasks.length} completed`;
   dayProgress.style.width = visibleTasks.length ? `${(completed / visibleTasks.length) * 100}%` : '0%';
   const earnedToday = visibleTasks.filter(task => task.done).reduce((sum, task) => sum + task.points, 0);
-  const startingScore = activeAccount ? activeAccount.gamerscore : 1200;
-  const currentScore = virginAccount ? 0 : startingScore + earnedToday;
+  const currentScore = activeAccount?.gamerscore || 0;
   todayPoints.textContent = virginAccount ? '0' : earnedToday;
   gamerscore.textContent = currentScore.toLocaleString();
 }
@@ -98,11 +104,15 @@ list.addEventListener('change', event => {
     if (virginAccount && task.done) {
       virginAccount = false;
       activeAccount.isNew = false;
+    }
+    if (task.done && !wasDone && activeAccount) {
+      activeAccount.gamerscore = (activeAccount.gamerscore || 0) + task.points;
       localStorage.setItem('questscore-accounts', JSON.stringify(activeAccounts));
       localStorage.setItem('questscore-account', JSON.stringify(activeAccount));
     }
     if (task.done && !wasDone) recordCompletedAchievements(task);
   }
+  saveTasks();
   renderTasks();
   if (input.checked) {
     const questCompleted = task.done && isSubtask;
@@ -164,6 +174,7 @@ deleteTaskBtn.addEventListener('click', () => {
   const task = tasks.find(item => item.id === editingTaskId);
   if (!task || !window.confirm(`Remove "${task.title}"?`)) return;
   tasks.splice(tasks.indexOf(task), 1);
+  saveTasks();
   renderTasks();
   modal.hidden = true;
 });
@@ -179,13 +190,11 @@ form.addEventListener('submit', event => {
     task.subtasks = subtasks;
     task.done = task.subtasks.length ? task.subtasks.every(step => step.done) : task.done;
   } else tasks.unshift({ id: Date.now(), title: data.get('title'), points: calculatePoints(subtasks.length), label: 'New quest', scheduledDate: data.get('scheduledDate'), deadline: data.get('deadline'), subtasks, done: false });
+  saveTasks();
   renderTasks();
   form.reset();
   modal.hidden = true;
 });
-const taskInput = document.querySelector('#taskInput');
-document.querySelector('#quickAddBtn').addEventListener('click', () => { const title = taskInput.value.trim(); if (!title) return; tasks.unshift({ id: Date.now(), title, points: 20, label: 'New quest', subtasks: [], done: false }); taskInput.value = ''; renderTasks(); });
-taskInput.addEventListener('keydown', event => { if (event.key === 'Enter') document.querySelector('#quickAddBtn').click(); });
 dateChip.value = selectedDate;
 dateChip.addEventListener('change', () => { selectedDate = dateChip.value || localDate; renderTasks(); });
 const todayView = document.querySelector('#today');
