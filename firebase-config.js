@@ -1,6 +1,6 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js';
 import { getAnalytics, isSupported } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-analytics.js';
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js';
+import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from 'https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDwJpVYmSBk4DyW4ffVEaTxfXZrTq5Kp5c',
@@ -17,4 +17,4 @@ const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 const analytics = isSupported().then(supported => supported ? getAnalytics(app) : null);
 
-export { app, analytics, auth, googleProvider, signInWithPopup, signOut };
+export { app, analytics, auth, googleProvider, onAuthStateChanged, signInWithPopup, signOut };
