@@ -1,0 +1,6 @@
+{
+  "name": "quest-score",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A todo dashboard with nested subtasks, Gamerscore rewards, streaks, and achievements."
+}
