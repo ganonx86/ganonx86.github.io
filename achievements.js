@@ -64,6 +64,7 @@ const achievementAccounts = JSON.parse(localStorage.getItem('questscore-accounts
 const achievementAccount = achievementAccounts.find(account => account.email === achievementAccountEmail);
 const achievementLegacyStorageKey = `questscore-achievements-${achievementAccountEmail}`;
 const completedAchievementNames = new Set([...(achievementAccount?.achievements || []), ...JSON.parse(localStorage.getItem(achievementLegacyStorageKey) || '[]')]);
+const latestAchievementName = [...completedAchievementNames].at(-1);
 if (achievementAccount) {
   achievementAccount.achievements = [...completedAchievementNames];
   localStorage.setItem('questscore-accounts', JSON.stringify(achievementAccounts));
@@ -82,9 +83,9 @@ if (achievementTotal) achievementTotal.textContent = `${completedAchievementName
 document.querySelectorAll('.achievement-page-panel .ranking-note').forEach(element => {
   element.textContent = `${completedAchievementNames.size} unlocked`;
 });
-function renderAchievements(container, limit = achievements.length, onlyUnlocked = false) {
+function renderAchievements(container, limit = achievements.length, onlyUnlocked = false, selectedAchievement, onlyLocked = false) {
   let currentCategory = '';
-  const visibleAchievements = achievements.filter(achievement => !achievement.secret && (!onlyUnlocked || completedAchievementNames.has(achievement.name))).slice(0, limit);
+  const visibleAchievements = achievements.filter(achievement => !achievement.secret && (!onlyUnlocked || completedAchievementNames.has(achievement.name)) && (!onlyLocked || !completedAchievementNames.has(achievement.name)) && (selectedAchievement === undefined || achievement.name === selectedAchievement.name)).slice(0, limit);
   container.innerHTML = visibleAchievements.map((achievement, index) => {
     const category = achievement.category !== currentCategory ? `<h3 class="achievement-category">${achievement.category}</h3>` : '';
     currentCategory = achievement.category;
@@ -96,16 +97,15 @@ function renderAchievements(container, limit = achievements.length, onlyUnlocked
 document.querySelectorAll('.achievement-list').forEach(container => {
   const isCollection = Boolean(container.closest('.achievement-page-panel'));
   if (isCollection) container.replaceChildren();
-  renderAchievements(container, isCollection ? achievements.length : 3, true);
-  if (isCollection) {
-    const viewAllButton = document.createElement('button');
-    viewAllButton.className = 'achievement-view-all';
-    viewAllButton.type = 'button';
-    viewAllButton.textContent = 'Voir tous les succès';
-    container.closest('.achievement-page-panel').querySelector('.section-heading').append(viewAllButton);
-    viewAllButton.addEventListener('click', () => {
-      renderAchievements(container, achievements.length, false);
-      viewAllButton.remove();
-    });
-  }
+  if (!isCollection) {
+    const latestAchievement = achievements.find(achievement => achievement.name === latestAchievementName);
+    renderAchievements(container, 1, true, latestAchievement);
+  } else renderAchievements(container, achievements.length, true);
 });
+if (document.body.classList.contains('achievements-body')) {
+  const availablePanel = document.createElement('section');
+  availablePanel.className = 'achievements-panel available-achievements-panel';
+  availablePanel.innerHTML = '<div class="section-heading"><h2>Available achievements</h2><span class="ranking-note">Still to unlock</span></div><div class="achievement-list"></div>';
+  document.querySelector('.achievements-page').append(availablePanel);
+  renderAchievements(availablePanel.querySelector('.achievement-list'), achievements.length, false, undefined, true);
+}

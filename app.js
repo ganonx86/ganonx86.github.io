@@ -125,7 +125,6 @@ const modalEyebrow = document.querySelector('#modalEyebrow');
 const modalHeading = document.querySelector('#modalHeading');
 const saveTaskBtn = document.querySelector('#saveTaskBtn');
 const deleteTaskBtn = document.querySelector('#deleteTaskBtn');
-const dateChip = document.querySelector('#dateChip');
 const addSubtaskBtn = document.querySelector('#addSubtaskBtn');
 const subtaskDraftList = document.querySelector('#subtaskDraftList');
 let editingTaskId = null;
@@ -195,8 +194,6 @@ form.addEventListener('submit', event => {
   form.reset();
   modal.hidden = true;
 });
-dateChip.value = selectedDate;
-dateChip.addEventListener('change', () => { selectedDate = dateChip.value || localDate; renderTasks(); });
 const todayView = document.querySelector('#today');
 const leaderboardView = document.querySelector('#leaderboard');
 const achievementsView = document.querySelector('#achievements');

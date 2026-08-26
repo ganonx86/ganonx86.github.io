@@ -15,17 +15,16 @@
 .dashboard-body .progress-track,.dashboard-body .achievement-progress{display:none}
 .achievements-body .progress-track,.achievements-body .achievement-progress{display:none}
 @media (prefers-reduced-motion: no-preference) {
-	.nav-item,.button,.filter-button,.theme-toggle,.icon-button,.task,.achievement,.level-card,.rank-row,.provider-button,.avatar,.brand-mark { transition: transform .2s ease, border-color .2s ease, background-color .2s ease, box-shadow .2s ease, color .2s ease; }
+	.nav-item,.button,.filter-button,.icon-button,.task,.achievement,.level-card,.rank-row,.provider-button,.avatar,.brand-mark { transition: transform .2s ease, border-color .2s ease, background-color .2s ease, box-shadow .2s ease, color .2s ease; }
 	.nav-item:hover { transform: translateX(4px); background: #f0f2ed; color: var(--ink); }
 	.button:hover { transform: translateY(-2px); box-shadow: 0 8px 18px #11131518; }
-	.filter-button:hover,.theme-toggle:hover { transform: translateY(-1px); border-color: #9bb45b; }
+	.filter-button:hover { transform: translateY(-1px); border-color: #9bb45b; }
 	.task:hover,.achievement:hover,.rank-row:hover { transform: translateX(4px); border-color: #b9cc78; box-shadow: 0 8px 18px #1113150b; }
 	.level-card:hover { transform: translateY(-3px); box-shadow: 0 12px 24px #11131518; }
 	.provider-button:hover { transform: translateY(-2px); box-shadow: 0 7px 15px #11131512; }
 	.avatar:hover,.brand-mark:hover { transform: scale(1.08) rotate(4deg); }
 	.icon-button:hover { transform: scale(1.15); color: var(--ink); }
 }
-.login-panel-inner>.theme-toggle{display:flex;margin-left:auto;margin-bottom:22px}.profile-panel>.theme-toggle{display:flex;margin-left:auto;margin-bottom:22px}
 .achievement-category{grid-column:1/-1;margin:18px 0 2px;color:#9ca29e;font:10px var(--mono);text-transform:uppercase;letter-spacing:.4px}.achievement-category:first-child{margin-top:0}.achievement-page-panel .achievement-list{display:grid}
 .secret-achievement{background:#fafbf8}.secret-achievement .achievement-icon{border-color:#cbd3c4;background:#eef2e9;color:#8b9783;font-size:16px}.secret-achievement strong{color:#7c8778}.secret-achievement b{color:#9ca59a}
 .achievement-view-all{margin-top:17px;padding:10px 12px;border:1px solid var(--line);background:var(--white);color:#80a83d;font:10px var(--mono);cursor:pointer}.achievement-view-all:hover{border-color:#b9cc78;background:#f8fbeF}
