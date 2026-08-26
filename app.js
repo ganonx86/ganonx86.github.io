@@ -1,8 +1,4 @@
 const tasks = [
-  { id: 1, title: 'Plan the week ahead', points: 40, label: 'Personal', scheduledDate: '2026-08-25', deadline: '2026-08-25', subtasks: [{ text: 'Review calendar', done: true }, { text: 'Pick 3 priorities', done: true }, { text: 'Block focus time', done: false }], done: false },
-  { id: 2, title: 'Ship the new landing page', points: 75, label: 'Work', scheduledDate: '2026-08-25', deadline: '2026-08-28', subtasks: [{ text: 'Review final copy', done: true }, { text: 'Push to production', done: false }], done: false },
-  { id: 3, title: '30 minute morning run', points: 20, label: 'Health', scheduledDate: '2026-08-25', deadline: '2026-08-25', subtasks: [], done: true },
-  { id: 4, title: 'Read 10 pages of a book', points: 20, label: 'Learning', scheduledDate: '2026-08-25', deadline: '2026-08-25', subtasks: [], done: true },
   { id: 5, title: 'Inbox zero', points: 40, label: 'Work', scheduledDate: '2026-08-26', deadline: '2026-08-27', subtasks: [], done: false },
   { id: 6, title: 'Call Mum', points: 20, label: 'Personal', scheduledDate: '2026-08-26', deadline: '2026-08-26', subtasks: [], done: false }
 ];
