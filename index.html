@@ -9,7 +9,8 @@
     <script>
       const sessionEmail = localStorage.getItem('questscore-session');
       const accounts = JSON.parse(localStorage.getItem('questscore-accounts') || '[]');
-      const destination = sessionEmail && accounts.some(account => account.email === sessionEmail) ? 'dashboard.html' : 'login.html';
+      const activeAccount = JSON.parse(localStorage.getItem('questscore-account') || 'null');
+      const destination = sessionEmail && (accounts.some(account => account.email === sessionEmail) || activeAccount?.email === sessionEmail) ? 'dashboard.html' : 'login.html';
       window.location.replace(destination);
     </script>
     <p><a href="login.html">Continue to sign in</a></p>

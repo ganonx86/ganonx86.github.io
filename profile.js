@@ -40,7 +40,8 @@ profileForm.addEventListener('submit', event => {
   const profile = Object.fromEntries(new FormData(profileForm));
   profile.profileImage = profileImagePreview.hidden ? savedProfile?.profileImage || '' : profileImagePreview.src;
   account.profile = profile;
-  localStorage.setItem('questscore-accounts', JSON.stringify(accounts.map(item => item.email === account.email ? account : item)));
+  const updatedAccounts = accounts.some(item => item.email === account.email) ? accounts.map(item => item.email === account.email ? account : item) : [...accounts, account];
+  localStorage.setItem('questscore-accounts', JSON.stringify(updatedAccounts));
   localStorage.setItem('questscore-account', JSON.stringify(account));
   localStorage.setItem('questscore-profile', JSON.stringify(profile));
   profileStatus.textContent = 'Profile saved. Your quests are ready.';
