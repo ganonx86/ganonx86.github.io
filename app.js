@@ -32,7 +32,6 @@ function calculatePoints(subtaskCount) {
 function recordCompletedAchievements(task) {
   if (!activeEmail || !task.done) return;
   const names = new Set([...(activeAccount?.achievements || []), ...JSON.parse(localStorage.getItem(achievementStorageKey) || '[]')]);
-  names.add('Bienvenue, Aventurier');
   const completedCount = Number(localStorage.getItem(`questscore-completed-count-${activeEmail}`) || 0) + 1;
   localStorage.setItem(`questscore-completed-count-${activeEmail}`, completedCount);
   if (completedCount >= 5) names.add("Et c'est parti !");

@@ -64,13 +64,14 @@ const achievementAccounts = JSON.parse(localStorage.getItem('questscore-accounts
 const achievementAccount = achievementAccounts.find(account => account.email === achievementAccountEmail);
 const achievementLegacyStorageKey = `questscore-achievements-${achievementAccountEmail}`;
 const completedAchievementNames = new Set([...(achievementAccount?.achievements || []), ...JSON.parse(localStorage.getItem(achievementLegacyStorageKey) || '[]')]);
+completedAchievementNames.delete('Bienvenue, Aventurier');
 const latestAchievementName = [...completedAchievementNames].at(-1);
 if (achievementAccount) {
   achievementAccount.achievements = [...completedAchievementNames];
   localStorage.setItem('questscore-accounts', JSON.stringify(achievementAccounts));
   localStorage.setItem('questscore-account', JSON.stringify(achievementAccount));
 }
-const completedQuestCount = Number(localStorage.getItem(`questscore-completed-count-${achievementAccountEmail}`) || 0);
+const completedQuestCount = achievementAccount ? Number(localStorage.getItem(`questscore-completed-count-${achievementAccountEmail}`) || 0) : 0;
 achievements.find(achievement => achievement.name === "Et c'est parti !").progress = `${Math.min(completedQuestCount, 5)} / 5 quêtes`;
 document.querySelectorAll('.xp-mini-top span:first-child').forEach(element => { element.textContent = 'Score'; });
 document.querySelectorAll('.level-card .eyebrow.light').forEach(element => { element.textContent = 'TOTAL SCORE'; });

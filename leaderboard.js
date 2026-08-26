@@ -4,7 +4,7 @@ const leaderboardAccount = leaderboardAccounts.find(account => account.email ===
 const leaderboardTasks = JSON.parse(localStorage.getItem(`questscore-tasks-${leaderboardEmail || 'guest'}`) || '[]');
 const completedTasks = leaderboardTasks.filter(task => task.done);
 const totalQuests = leaderboardTasks.length;
-const completedCount = Number(localStorage.getItem(`questscore-completed-count-${leaderboardEmail}`) || completedTasks.length);
+const completedCount = leaderboardAccount ? Number(localStorage.getItem(`questscore-completed-count-${leaderboardEmail}`) || completedTasks.length) : 0;
 const completionRate = totalQuests ? Math.round((completedTasks.length / totalQuests) * 100) : 0;
 const today = new Date();
 const weekStart = new Date(today);
