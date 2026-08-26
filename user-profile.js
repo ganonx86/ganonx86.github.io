@@ -3,7 +3,7 @@ const sessionEmail = sessionStorage.getItem('questscore-session');
 const account = accounts.find(item => item.email === sessionEmail) || JSON.parse(localStorage.getItem('questscore-account') || 'null');
 const profile = account?.profile || JSON.parse(localStorage.getItem('questscore-profile') || 'null');
 const fullName = [profile?.firstName, profile?.lastName].filter(Boolean).join(' ');
-const displayName = profile?.gamertag || fullName || account?.email?.split('@')[0] || 'Player';
+const displayName = profile?.gamertag || fullName || account?.email?.split('@')[0] || 'Profile';
 const initials = (profile?.firstName?.[0] || displayName[0] || 'P').concat(profile?.lastName?.[0] || '').toUpperCase();
 const accountScore = Number(account?.gamerscore || 0);
 const today = new Date();
