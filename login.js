@@ -9,14 +9,15 @@ googleLogin.addEventListener('click', async () => {
   try {
     const result = await signInWithPopup(auth, googleProvider);
     const user = result.user;
-    const account = { email: user.email, profile: { firstName: user.displayName?.split(' ')[0] || '', lastName: user.displayName?.split(' ').slice(1).join(' ') || '', profileImage: user.photoURL || '' }, gamerscore: 0, achievements: [], isNew: true };
+    const account = { uid: user.uid, email: user.email, profile: { firstName: user.displayName?.split(' ')[0] || '', lastName: user.displayName?.split(' ').slice(1).join(' ') || '', profileImage: user.photoURL || '' }, gamerscore: 0, achievements: [], isNew: true };
     const accounts = JSON.parse(localStorage.getItem('questscore-accounts') || '[]');
     const existingIndex = accounts.findIndex(item => item.email === user.email);
-    if (existingIndex >= 0) accounts[existingIndex] = { ...accounts[existingIndex], ...account, profile: accounts[existingIndex].profile || account.profile };
-    else accounts.push(account);
+    const savedAccount = existingIndex >= 0 ? { ...accounts[existingIndex], ...account, profile: accounts[existingIndex].profile || account.profile } : account;
+    if (existingIndex >= 0) accounts[existingIndex] = savedAccount;
+    else accounts.push(savedAccount);
     localStorage.setItem('questscore-accounts', JSON.stringify(accounts));
-    const savedProfile = accounts[existingIndex]?.profile;
-    localStorage.setItem('questscore-account', JSON.stringify({ ...account, profile: savedProfile || account.profile }));
+    const savedProfile = savedAccount.profile;
+    localStorage.setItem('questscore-account', JSON.stringify(savedAccount));
     sessionStorage.setItem('questscore-session', user.email);
     const profile = savedProfile || account.profile;
     const hasCompleteProfile = profile?.gamertag && profile?.firstName && profile?.lastName && profile?.birthDate && profile?.country && profile?.town && profile?.zipCode;

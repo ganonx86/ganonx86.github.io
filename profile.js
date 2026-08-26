@@ -39,6 +39,7 @@ profileForm.addEventListener('submit', event => {
   event.preventDefault();
   const profile = Object.fromEntries(new FormData(profileForm));
   profile.profileImage = profileImagePreview.hidden ? savedProfile?.profileImage || '' : profileImagePreview.src;
+  account.isNew = false;
   account.profile = profile;
   const updatedAccounts = accounts.some(item => item.email === account.email) ? accounts.map(item => item.email === account.email ? account : item) : [...accounts, account];
   localStorage.setItem('questscore-accounts', JSON.stringify(updatedAccounts));
