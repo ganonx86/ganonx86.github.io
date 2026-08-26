@@ -2,12 +2,16 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="refresh" content="0; url=login.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sign in | Quest Score</title>
+    <title>Quest Score</title>
   </head>
   <body>
-    <script>window.location.replace('login.html');</script>
+    <script>
+      const sessionEmail = localStorage.getItem('questscore-session');
+      const accounts = JSON.parse(localStorage.getItem('questscore-accounts') || '[]');
+      const destination = sessionEmail && accounts.some(account => account.email === sessionEmail) ? 'dashboard.html' : 'login.html';
+      window.location.replace(destination);
+    </script>
     <p><a href="login.html">Continue to sign in</a></p>
   </body>
 </html>
