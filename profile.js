@@ -47,8 +47,13 @@ profileForm.addEventListener('submit', event => {
   profileStatus.textContent = 'Profile saved. Your quests are ready.';
   setTimeout(() => { window.location.href = 'index.html'; }, 700);
 });
-disconnectBtn?.addEventListener('click', () => {
+disconnectBtn?.addEventListener('click', async () => {
   localStorage.removeItem('questscore-session');
   localStorage.removeItem('questscore-account');
-  window.location.href = 'login.html';
+  try {
+    const { auth, signOut } = await import('./firebase-config.js');
+    await signOut(auth);
+  } finally {
+    window.location.replace('login.html');
+  }
 });
