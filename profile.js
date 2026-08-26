@@ -19,7 +19,7 @@ disconnectBtn.textContent = 'Disconnect profile';
 profileActions.prepend(disconnectBtn);
 const savedProfile = account?.profile || JSON.parse(localStorage.getItem('questscore-profile') || 'null');
 const googleGamertag = account?.googleDisplayName || account?.email?.split('@')[0] || '';
-if (googleGamertag && profileForm.elements.gamertag) profileForm.elements.gamertag.value = googleGamertag;
+if (!savedProfile?.gamertag && googleGamertag && profileForm.elements.gamertag) profileForm.elements.gamertag.value = googleGamertag;
 if (savedProfile) Object.entries(savedProfile).forEach(([name, value]) => {
   if (name !== 'profileImage' && profileForm.elements[name]) profileForm.elements[name].value = value;
 });
@@ -40,7 +40,6 @@ profileImage.addEventListener('change', () => {
 profileForm.addEventListener('submit', event => {
   event.preventDefault();
   const profile = Object.fromEntries(new FormData(profileForm));
-  profile.gamertag = googleGamertag;
   profile.profileImage = profileImagePreview.hidden ? savedProfile?.profileImage || '' : profileImagePreview.src;
   account.isNew = false;
   account.profile = profile;
