@@ -1,4 +1,4 @@
-const leaderboardEmail = localStorage.getItem('questscore-session');
+const leaderboardEmail = sessionStorage.getItem('questscore-session');
 const leaderboardAccounts = JSON.parse(localStorage.getItem('questscore-accounts') || '[]');
 const leaderboardAccount = leaderboardAccounts.find(account => account.email === leaderboardEmail);
 const leaderboardTasks = JSON.parse(localStorage.getItem(`questscore-tasks-${leaderboardEmail || 'guest'}`) || '[]');

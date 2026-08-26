@@ -5,7 +5,7 @@ const profileImage = document.querySelector('#profileImage');
 const profileImagePreview = document.querySelector('#profileImagePreview');
 const profileImageFallback = document.querySelector('#profileImageFallback');
 const accounts = JSON.parse(localStorage.getItem('questscore-accounts') || '[]');
-const sessionEmail = localStorage.getItem('questscore-session');
+const sessionEmail = sessionStorage.getItem('questscore-session');
 const account = accounts.find(item => item.email === sessionEmail) || JSON.parse(localStorage.getItem('questscore-account') || 'null');
 if (!account) window.location.href = 'login.html';
 connectedAccount.textContent = account ? `${account.email} account connected` : '';
@@ -48,7 +48,7 @@ profileForm.addEventListener('submit', event => {
   setTimeout(() => { window.location.href = 'index.html'; }, 700);
 });
 disconnectBtn?.addEventListener('click', async () => {
-  localStorage.removeItem('questscore-session');
+  sessionStorage.removeItem('questscore-session');
   localStorage.removeItem('questscore-account');
   try {
     const { auth, signOut } = await import('./firebase-config.js');

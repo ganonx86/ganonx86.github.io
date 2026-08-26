@@ -1,4 +1,4 @@
-const sessionEmail = localStorage.getItem('questscore-session');
+const sessionEmail = sessionStorage.getItem('questscore-session');
 const accounts = JSON.parse(localStorage.getItem('questscore-accounts') || '[]');
 const activeAccount = JSON.parse(localStorage.getItem('questscore-account') || 'null');
 

@@ -59,7 +59,7 @@ const achievements = [
   { category: 'Habitudes & apprentissage', name: 'Nouvelle compétence débloquée', condition: "Terminer un objectif d'apprentissage", reward: 200 },
   { category: 'Habitudes & apprentissage', name: 'Je peux le faire', condition: 'Réussir quelque chose qui semblait impossible', reward: 150 }
 ];
-const achievementAccountEmail = localStorage.getItem('questscore-session') || 'guest';
+const achievementAccountEmail = sessionStorage.getItem('questscore-session') || 'guest';
 const achievementAccounts = JSON.parse(localStorage.getItem('questscore-accounts') || '[]');
 const achievementAccount = achievementAccounts.find(account => account.email === achievementAccountEmail);
 const achievementLegacyStorageKey = `questscore-achievements-${achievementAccountEmail}`;

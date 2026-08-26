@@ -17,7 +17,7 @@ googleLogin.addEventListener('click', async () => {
     localStorage.setItem('questscore-accounts', JSON.stringify(accounts));
     const savedProfile = accounts[existingIndex]?.profile;
     localStorage.setItem('questscore-account', JSON.stringify({ ...account, profile: savedProfile || account.profile }));
-    localStorage.setItem('questscore-session', user.email);
+    sessionStorage.setItem('questscore-session', user.email);
     const profile = savedProfile || account.profile;
     const hasCompleteProfile = profile?.gamertag && profile?.firstName && profile?.lastName && profile?.birthDate && profile?.country && profile?.town && profile?.zipCode;
     window.location.href = hasCompleteProfile ? 'dashboard.html' : 'profile-creation.html';

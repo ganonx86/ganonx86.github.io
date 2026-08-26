@@ -1,5 +1,5 @@
 const accounts = JSON.parse(localStorage.getItem('questscore-accounts') || '[]');
-const sessionEmail = localStorage.getItem('questscore-session');
+const sessionEmail = sessionStorage.getItem('questscore-session');
 const account = accounts.find(item => item.email === sessionEmail) || JSON.parse(localStorage.getItem('questscore-account') || 'null');
 const profile = account?.profile || JSON.parse(localStorage.getItem('questscore-profile') || 'null');
 const fullName = [profile?.firstName, profile?.lastName].filter(Boolean).join(' ');

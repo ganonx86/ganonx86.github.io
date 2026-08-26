@@ -2,7 +2,7 @@ const today = new Date();
 const localDate = new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
 let selectedDate = localDate;
 const activeAccounts = JSON.parse(localStorage.getItem('questscore-accounts') || '[]');
-const activeEmail = localStorage.getItem('questscore-session');
+const activeEmail = sessionStorage.getItem('questscore-session');
 const activeAccount = activeAccounts.find(account => account.email === activeEmail);
 const taskStorageKey = `questscore-tasks-${activeEmail || 'guest'}`;
 const tasks = JSON.parse(localStorage.getItem(taskStorageKey) || '[]');
