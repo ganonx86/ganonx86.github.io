@@ -50,10 +50,6 @@ profileForm.addEventListener('submit', event => {
 disconnectBtn?.addEventListener('click', async () => {
   sessionStorage.removeItem('questscore-session');
   localStorage.removeItem('questscore-account');
-  try {
-    const { auth, signOut } = await import('./firebase-config.js');
-    await signOut(auth);
-  } finally {
-    window.location.replace('login.html');
-  }
+  window.location.replace('login.html');
+  import('./firebase-config.js').then(({ auth, signOut }) => signOut(auth)).catch(() => {});
 });
