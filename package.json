@@ -2,5 +2,14 @@
   "name": "quest-score",
   "version": "1.0.0",
   "private": true,
-  "description": "A todo dashboard with nested subtasks, Gamerscore rewards, streaks, and achievements."
+  "description": "A todo dashboard with nested subtasks, Gamerscore rewards, streaks, and achievements.",
+  "scripts": {
+    "start": "npx http-server . -p 8000"
+  },
+  "dependencies": {
+    "firebase": "^12.18.0"
+  },
+  "devDependencies": {
+    "http-server": "14.1.1"
+  }
 }

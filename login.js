@@ -4,6 +4,12 @@ const loginStatus = document.querySelector('#loginStatus');
 const googleLogin = document.querySelector('#googleLogin');
 
 googleLogin.addEventListener('click', async () => {
+  if (location.protocol === 'file:') {
+    loginStatus.textContent = 'Please run the app from a local web server: http://localhost:8000/login.html. Firebase Auth does not work from a file:// page.';
+    googleLogin.disabled = false;
+    return;
+  }
+
   googleLogin.disabled = true;
   loginStatus.textContent = 'Connecting to Google...';
   try {
