@@ -23,4 +23,3 @@ Open `index.html` in a browser to sign in. After authentication, use the dashboa
 - `leaderboard.html` - Weekly rankings and personal statistics
 - `achievements.html` - Achievement collection and progress, including custom French achievements
 - `login.html` - Local browser-based account sign-in
-- `profile.html` - Personal information setup and editing for the active local account
