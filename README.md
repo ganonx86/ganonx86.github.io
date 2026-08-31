@@ -22,5 +22,5 @@ Open `index.html` in a browser to sign in. After authentication, use the dashboa
 - `dashboard.html` - Today quests and task management
 - `leaderboard.html` - Weekly rankings and personal statistics
 - `achievements.html` - Achievement collection and progress, including custom French achievements
-- `login.html` - Separate email/password sign-in and sign-up modes
-- `profile.html` - Personal information setup after activating an account
+- `login.html` - Local browser-based account sign-in
+- `profile.html` - Personal information setup and editing for the active local account

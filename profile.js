@@ -18,8 +18,8 @@ disconnectBtn.id = 'disconnectBtn';
 disconnectBtn.textContent = 'Disconnect profile';
 profileActions.prepend(disconnectBtn);
 const savedProfile = account?.profile || JSON.parse(localStorage.getItem('questscore-profile') || 'null');
-const googleGamertag = account?.googleDisplayName || account?.email?.split('@')[0] || '';
-if (!savedProfile?.gamertag && googleGamertag && profileForm.elements.gamertag) profileForm.elements.gamertag.value = googleGamertag;
+const localGamertag = account?.email?.split('@')[0] || '';
+if (!savedProfile?.gamertag && localGamertag && profileForm.elements.gamertag) profileForm.elements.gamertag.value = localGamertag;
 if (savedProfile) Object.entries(savedProfile).forEach(([name, value]) => {
   if (name !== 'profileImage' && profileForm.elements[name]) profileForm.elements[name].value = value;
 });
@@ -54,5 +54,4 @@ disconnectBtn?.addEventListener('click', async () => {
   sessionStorage.removeItem('questscore-session');
   localStorage.removeItem('questscore-account');
   window.location.replace('login.html');
-  import('./firebase-config.js').then(({ auth, signOut }) => signOut(auth)).catch(() => {});
 });

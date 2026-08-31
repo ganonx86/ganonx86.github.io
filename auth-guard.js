@@ -15,13 +15,4 @@ function removeWebsiteAccount(email) {
 
 if (!sessionEmail || (!accounts.some(account => account.email === sessionEmail) && activeAccount?.email !== sessionEmail)) {
   window.location.replace('login.html');
-} else {
-  import('./firebase-config.js').then(({ auth, onAuthStateChanged }) => {
-    onAuthStateChanged(auth, user => {
-      if (!user || user.email !== sessionEmail) {
-        removeWebsiteAccount(sessionEmail);
-        window.location.replace('login.html');
-      }
-    });
-  }).catch(() => {});
 }
